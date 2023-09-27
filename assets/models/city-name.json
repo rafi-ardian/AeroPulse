@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Kota Bekasi",
+        "local_names": {
+            "ja": "ブカシ",
+            "zh": "贝克西",
+            "id": "Kota Bekasi"
+        },
+        "lat": -6.2349858,
+        "lon": 106.9945444,
+        "country": "ID",
+        "state": "West Java"
+    }
+]
