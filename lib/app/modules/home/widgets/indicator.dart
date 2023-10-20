@@ -8,7 +8,7 @@ import '../../../routes/app_pages.dart';
 import 'components.dart';
 
 class Indicator extends StatelessWidget {
-  final HomeController controller; // Gantikan dengan tipe yang benar
+  final HomeController controller;
 
   Indicator({required this.controller});
 

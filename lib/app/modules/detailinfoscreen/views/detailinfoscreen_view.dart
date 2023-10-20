@@ -3,22 +3,19 @@ import 'package:air_quality_apps/themes.dart';
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 
 import '../controllers/detailinfoscreen_controller.dart';
 import '../widgets/detail_component_indicator.dart';
 
 class DetailinfoscreenView extends GetView<DetailinfoscreenController> {
-  final controllerHome = Get.put(HomeController());
+  final controllerHome = Get.find<HomeController>();
 
-  var valueTest;
   @override
   Widget build(BuildContext context) {
     final arguments = Get.arguments as Map<String, String>;
     final cityName = arguments['cityName'];
 
     return Scaffold(
-      // appBar: AppBar(backgroundColor: redButtonColor),
       body: SafeArea(
         child: Center(
           child: Container(
@@ -45,8 +42,10 @@ class DetailinfoscreenView extends GetView<DetailinfoscreenController> {
               // This will enable tap to toggle option on header.
               enableToggle: true,
 
-              onIsContractedCallback: () => controller.isExtended.value = true,
-              onIsExtendedCallback: () => controller.isExtended.value = false,
+              onIsContractedCallback: () =>
+                  controllerHome.isExtended.value = true,
+              onIsExtendedCallback: () =>
+                  controllerHome.isExtended.value = false,
 
               //optional
               //This widget is sticking above the content and will never be contracted.
@@ -55,7 +54,7 @@ class DetailinfoscreenView extends GetView<DetailinfoscreenController> {
                 constraints: BoxConstraints.expand(height: 40),
                 child: Obx(
                   () => Center(
-                    child: controller.isExtended.value
+                    child: controllerHome.isExtended.value
                         ? Icon(
                             Icons.keyboard_arrow_up,
                             size: 35,
@@ -79,7 +78,6 @@ class DetailinfoscreenView extends GetView<DetailinfoscreenController> {
                         // Obx(() =>
                         Text(
                           "${cityName}",
-                          // "ss",
                           style: semiBoldText20.copyWith(color: whiteColor),
                         )
                         // ),
@@ -185,46 +183,6 @@ class DetailinfoscreenView extends GetView<DetailinfoscreenController> {
                       ),
                     ),
                   ),
-                  // Container(
-                  //   // color: Colors.white,
-                  //   height: Get.height / 2,
-                  //   width: Get.width,
-                  //   padding: EdgeInsets.only(left: 20, right: 20),
-                  //   child: Row(
-                  //     children: [
-                  //       // verticalIndicator(),
-                  //       VerticalBarIndicator(
-                  //         percent: controllerHome.components["co"] / 15400,
-                  //         header: '${controllerHome.components["co"]}',
-                  //         footer: 'CO',
-                  //       ),
-                  //       SizedBox(width: 20),
-                  //       VerticalBarIndicator(
-                  //         percent: controllerHome.components["o3"] / 180,
-                  //         header: '${controllerHome.components["o3"]}',
-                  //         footer: 'o3',
-                  //       ),
-                  //       SizedBox(width: 20),
-                  //       VerticalBarIndicator(
-                  //         percent: controllerHome.components["so2"] / 350,
-                  //         header: '${controllerHome.components["so2"]}',
-                  //         footer: 'so2',
-                  //       ),
-                  //       SizedBox(width: 20),
-                  //       VerticalBarIndicator(
-                  //         percent: controllerHome.components["pm2_5"] / 75,
-                  //         header: '${controllerHome.components["pm2_5"] / 75}',
-                  //         footer: 'pm2_5',
-                  //       ),
-                  //       SizedBox(width: 20),
-                  //       VerticalBarIndicator(
-                  //         percent: controllerHome.components["pm10"] / 200,
-                  //         header: '${controllerHome.components["pm10"] / 200}',
-                  //         footer: 'pm10',
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
                 ],
               ),
               expandableContent: Container(

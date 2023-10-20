@@ -1,4 +1,6 @@
 import 'package:air_quality_apps/app/modules/home/controllers/home_controller.dart';
+import 'package:air_quality_apps/app/modules/magazinescreen/controllers/magazinescreen_controller.dart';
+import 'package:air_quality_apps/app/modules/profilescreen/controllers/profilescreen_controller.dart';
 import 'package:air_quality_apps/app/modules/profilescreen/views/profilescreen_view.dart';
 import 'package:air_quality_apps/themes.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +12,7 @@ import '../../magazinescreen/views/magazinescreen_view.dart';
 import '../controllers/mainscreen_controller.dart';
 
 class MainscreenView extends GetView<MainscreenController> {
-  final _homeController = Get.lazyPut(() => HomeController());
-  final controller = Get.put(MainscreenController());
+  // final homeController = Get.lazyPut(() => HomeController());
 
   final List<Widget> _pages = [
     MagazinescreenView(),
@@ -21,21 +22,37 @@ class MainscreenView extends GetView<MainscreenController> {
 
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.put(HomeController());
+    final controller = Get.put(MainscreenController());
+    Get.lazyPut(() => ProfilescreenController());
+    // Get.put(MagazinescreenController());
     return Scaffold(
       body: Obx(() => _pages[controller.tabIndex.value]),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book_rounded),
+              icon: Image.asset('assets/icons/news.png',
+                  width: 24.0,
+                  height: 24.0,
+                  color:
+                      controller.tabIndex.value == 0 ? blackColor : greyColor),
               label: 'Magazine',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_filled),
+              icon: Image.asset('assets/icons/home.png',
+                  width: 24.0,
+                  height: 24.0,
+                  color:
+                      controller.tabIndex.value == 1 ? blackColor : greyColor),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_rounded),
+              icon: Image.asset('assets/icons/profile.png',
+                  width: 24.0,
+                  height: 24.0,
+                  color:
+                      controller.tabIndex.value == 2 ? blackColor : greyColor),
               label: 'Profile',
             ),
           ],

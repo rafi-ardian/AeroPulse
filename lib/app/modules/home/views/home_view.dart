@@ -15,7 +15,6 @@ import '../controllers/home_controller.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 
 import '../widgets/components.dart';
-import '';
 
 class HomeView extends GetView<HomeController> {
   final iconList = <IconData>[
@@ -23,12 +22,16 @@ class HomeView extends GetView<HomeController> {
     Icons.home,
     Icons.person,
   ];
-  final cityProvider = Get.put(CityProvider());
-  final controllerDetailScreen = Get.put(DetailinfoscreenController());
+  // final cityProvider = Get.put(CityProvider());
+  // final controllerDetailScreen = Get.put(DetailinfoscreenController());
+  // KALO ADA ERROR COBA ERASE TRS BALIKIN LAGI KODE DIBAWAH INI!!
+  // final controller = Get.put(HomeController());
+  // final controller = Get.put(HomeController(), permanent: true);
 
-  // var _bottomNavIndex = 0.obs;
   @override
   Widget build(BuildContext context) {
+    // final controller = Get.put(HomeController());
+    final controller = Get.find<HomeController>();
     return Scaffold(
       body: SafeArea(
         child: Column(

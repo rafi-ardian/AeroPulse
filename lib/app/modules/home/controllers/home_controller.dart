@@ -6,6 +6,7 @@ import 'package:air_quality_apps/themes.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import '../../../data/models/city_model.dart';
 import '../../../data/models/pollution_model.dart';
@@ -24,10 +25,11 @@ class Country {
 class HomeController extends GetxController {
   var bottomNavIndex = 0.obs;
   RxString city = "".obs;
-
   RxDouble lat = 0.0.obs;
   RxDouble lon = 0.0.obs;
 
+  RxDouble percentVertical = 0.0.obs;
+  RxBool isExtended = true.obs;
   var aqi = 0.0.obs;
   var components = {}.obs;
 
@@ -35,88 +37,6 @@ class HomeController extends GetxController {
 
   void changeTabIndex(int index) {
     tabIndex.value = index;
-  }
-
-  Color get progressColor {
-    if (aqi.value == 1) {
-      return greenApple;
-    } else if (aqi.value >= 2 && aqi.value <= 3) {
-      return yellowWarning;
-    } else if (aqi.value >= 4 && aqi.value <= 5) {
-      return redButtonColor;
-    } else {
-      return Colors.grey;
-    }
-  }
-
-  String? get healthDesc {
-    if (aqi.value == 1) {
-      return "good";
-    } else if (aqi.value >= 2 && aqi.value <= 3) {
-      return "moderate";
-    } else if (aqi.value >= 4 && aqi.value <= 5) {
-      return "unhealthy";
-    }
-  }
-
-  String? get textDesc1 {
-    if (aqi.value == 1) {
-      return "Enjoy the fresh air outside!";
-    } else if (aqi.value >= 2 && aqi.value <= 3) {
-      return "Limit prolonged outdoor activities!";
-    } else if (aqi.value >= 4 && aqi.value <= 5) {
-      return "wear a mask if go outside!";
-    }
-  }
-
-  String? get textDesc2 {
-    if (aqi.value == 1) {
-      return "Perfect day for outdoor activities!";
-    } else if (aqi.value >= 2 && aqi.value <= 3) {
-      return "Keep windows closed during peak hours!";
-    } else if (aqi.value >= 4 && aqi.value <= 5) {
-      return "Do not ventilate!";
-    }
-  }
-
-  String? get textDesc3 {
-    if (aqi.value == 1) {
-      return "No need for air purifiers today.";
-    } else if (aqi.value >= 2 && aqi.value <= 3) {
-      return "Consider using an air purifier inside.";
-    } else if (aqi.value >= 4 && aqi.value <= 5) {
-      return "Make sure your air purifier is on";
-    }
-  }
-
-  ImageProvider? get iconDesc1 {
-    if (aqi.value == 1) {
-      return AssetImage("assets/icons/fresh-air.png");
-    } else if (aqi.value >= 2 && aqi.value <= 3) {
-      return AssetImage("assets/icons/limit.png");
-    } else if (aqi.value >= 4 && aqi.value <= 5) {
-      return AssetImage("assets/icons/face-mask.png");
-    }
-  }
-
-  ImageProvider? get iconDesc2 {
-    if (aqi.value == 1) {
-      return AssetImage("assets/icons/outdoor.png");
-    } else if (aqi.value >= 2 && aqi.value <= 3) {
-      return AssetImage("assets/icons/window-closed.png");
-    } else if (aqi.value >= 4 && aqi.value <= 5) {
-      return AssetImage("assets/icons/window-closed.png");
-    }
-  }
-
-  ImageProvider? get iconDesc3 {
-    if (aqi.value == 1) {
-      return AssetImage("assets/icons/no-air-purifier.png");
-    } else if (aqi.value >= 2 && aqi.value <= 3) {
-      return AssetImage("assets/icons/air-purifier.png");
-    } else if (aqi.value >= 4 && aqi.value <= 5) {
-      return AssetImage("assets/icons/air-purifier.png");
-    }
   }
 
   double get aqiPercentage {
@@ -168,6 +88,102 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       print('Error fetching city name: $e');
+    }
+  }
+
+  Color get progressColor {
+    if (aqi.value == 1) {
+      return greenApple;
+    } else if (aqi.value >= 2 && aqi.value <= 3) {
+      return yellowWarning;
+    } else if (aqi.value >= 4 && aqi.value <= 5) {
+      return redButtonColor;
+    } else {
+      return Colors.grey;
+    }
+  }
+
+// text desc change on detail screen
+  String? get healthDesc {
+    if (aqi.value == 1) {
+      return "good";
+    } else if (aqi.value >= 2 && aqi.value <= 3) {
+      return "moderate";
+    } else if (aqi.value >= 4 && aqi.value <= 5) {
+      return "unhealthy";
+    }
+  }
+
+// text desc change on detail screen
+  String? get textDesc1 {
+    if (aqi.value == 1) {
+      return "Enjoy the fresh air outside!";
+    } else if (aqi.value >= 2 && aqi.value <= 3) {
+      return "Limit prolonged outdoor activities!";
+    } else if (aqi.value >= 4 && aqi.value <= 5) {
+      return "wear a mask if go outside!";
+    }
+  }
+
+  String? get textDesc2 {
+    if (aqi.value == 1) {
+      return "Perfect day for outdoor activities!";
+    } else if (aqi.value >= 2 && aqi.value <= 3) {
+      return "Keep windows closed during peak hours!";
+    } else if (aqi.value >= 4 && aqi.value <= 5) {
+      return "Do not ventilate!";
+    }
+  }
+
+  String? get textDesc3 {
+    if (aqi.value == 1) {
+      return "No need for air purifiers today.";
+    } else if (aqi.value >= 2 && aqi.value <= 3) {
+      return "Consider using an air purifier inside.";
+    } else if (aqi.value >= 4 && aqi.value <= 5) {
+      return "Make sure your air purifier is on";
+    }
+  }
+
+// Icon change on detail screen
+  ImageProvider? get iconDesc1 {
+    if (aqi.value == 1) {
+      return AssetImage("assets/icons/fresh-air.png");
+    } else if (aqi.value >= 2 && aqi.value <= 3) {
+      return AssetImage("assets/icons/limit.png");
+    } else if (aqi.value >= 4 && aqi.value <= 5) {
+      return AssetImage("assets/icons/face-mask.png");
+    }
+  }
+
+  ImageProvider? get iconDesc2 {
+    if (aqi.value == 1) {
+      return AssetImage("assets/icons/outdoor.png");
+    } else if (aqi.value >= 2 && aqi.value <= 3) {
+      return AssetImage("assets/icons/window-closed.png");
+    } else if (aqi.value >= 4 && aqi.value <= 5) {
+      return AssetImage("assets/icons/window-closed.png");
+    }
+  }
+
+  ImageProvider? get iconDesc3 {
+    if (aqi.value == 1) {
+      return AssetImage("assets/icons/no-air-purifier.png");
+    } else if (aqi.value >= 2 && aqi.value <= 3) {
+      return AssetImage("assets/icons/air-purifier.png");
+    } else if (aqi.value >= 4 && aqi.value <= 5) {
+      return AssetImage("assets/icons/air-purifier.png");
+    }
+  }
+
+// icon change to profile screen
+  ImageProvider? get iconProfile {
+    if (aqi.value == 1) {
+      return AssetImage("assets/icons/happy.png");
+    } else if (aqi.value >= 2 && aqi.value <= 3) {
+      return AssetImage("assets/icons/poker-face.png");
+    } else if (aqi.value >= 4 && aqi.value <= 5) {
+      return AssetImage("assets/icons/sad.png");
     }
   }
 }

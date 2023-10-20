@@ -36,6 +36,15 @@ Color blueDarkTwo = Color(0xFF5b96a7);
 Color blueDarkThree = Color(0xFF84afb5);
 Color blueDarkFour = Color(0xFFadc9c3);
 Color splashScreenScolor = Color(0xFFEBE9E3);
+Color whiteteOff = Color(0xFFFAF9F6);
+Color whiteSmoke = Color(0xFFf5f5f5);
+Color purple = Color(0xFF6A1B9A);
+Color skinType1 = Color(0xFFf7d08a);
+Color skinType2 = Color(0xFFe4b590);
+Color skinType3 = Color(0xFFcf9f7d);
+Color skinType4 = Color(0xFFb67851);
+Color skinType5 = Color(0xFFa15e2d);
+Color skinType6 = Color(0xFF513938);
 
 TextStyle bottomNavText =
     GoogleFonts.poppins(color: greyColor, fontSize: 12, fontWeight: bold);
@@ -74,6 +83,8 @@ TextStyle semiBoldText20 =
     GoogleFonts.poppins(fontSize: 20, fontWeight: semiBold);
 TextStyle semiBoldText25 =
     GoogleFonts.poppins(fontSize: 25, fontWeight: semiBold);
+TextStyle semiBoldText35 =
+    GoogleFonts.poppins(fontSize: 35, fontWeight: semiBold);
 TextStyle semiBoldText50 =
     GoogleFonts.poppins(fontSize: 50, fontWeight: semiBold);
 

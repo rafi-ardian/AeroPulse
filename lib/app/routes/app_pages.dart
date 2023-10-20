@@ -38,7 +38,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILESCREEN,
-      page: () => const ProfilescreenView(),
+      page: () => ProfilescreenView(),
       binding: ProfilescreenBinding(),
     ),
     GetPage(
